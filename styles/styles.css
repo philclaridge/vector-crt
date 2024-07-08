@@ -1,0 +1,43 @@
+body {
+    display: flex;
+    flex-direction: row;
+    margin: 0;
+    padding: 0;
+    overflow: auto;
+    width: 100%;
+}
+
+#controls {
+    width: 300px;
+    min-width: 250px;
+    padding: 20px;
+    background-color: #f0f0f0;
+    overflow-y: auto;
+    box-sizing: border-box;
+}
+
+#display {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    /*align-items: center;*/
+    overflow: auto;
+    padding: 20px;
+}
+
+#bitmapCanvas {
+    image-rendering: pixelated;
+    /*image-rendering: crisp-edges;*/
+    border: 1px solid blue;
+}
+
+.control-group {
+    margin-bottom: 5px;
+}
+
+table, th, td {
+    border: 1px solid;
+    border-collapse: collapse;
+    padding: 5px;
+}
+

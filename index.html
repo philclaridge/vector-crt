@@ -1,0 +1,152 @@
+<!--
+Copyright 2024, Philip Claridge
+SPDX-License-Identifier: MIT
+-->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vector character generator tester</title>
+    <link rel="stylesheet" href="styles/simple.min.css">
+    <link rel="stylesheet" href="styles/styles.css">
+</head>
+<body>
+<div id="controls">
+    <h2>Controls</h2>
+    <div class="control-group">
+        <label for="characterSelect">Select Character:</label>
+        <select id="characterSelect">
+            <option value="0">0</option>
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+            <option value="6">6</option>
+            <option value="7">7</option>
+            <option value="8">8</option>
+            <option value="9">9</option>
+
+            <option value="A">A</option>
+            <option value="B">B</option>
+            <option value="C">C</option>
+            <option value="D">D</option>
+            <option value="E">E</option>
+            <option value="F">F</option>
+            <option value="G">G</option>
+            <option value="H">H</option>
+            <option value="I">I</option>
+            <option value="J">J</option>
+            <option value="K">K</option>
+            <option value="L">L</option>
+            <option value="M">M</option>
+            <option value="N">N</option>
+            <option value="O">O</option>
+            <option value="P">P</option>
+            <option value="Q">Q</option>
+            <option value="R">R</option>
+            <option value="S">S</option>
+            <option value="T">T</option>
+            <option value="U">U</option>
+            <option value="V">V</option>
+            <option value="W">W</option>
+            <option value="X">X</option>
+            <option value="Y">Y</option>
+            <option value="Z">Z</option>
+
+            <option value="Q">Q</option>
+            <option value="R">R</option>
+            <option value="S">S</option>
+            <option value="T">T</option>
+            <option value="U">U</option>
+            <option value="V">V</option>
+            <option value="W">W</option>
+            <option value="X">X</option>
+            <option value="Y">Y</option>
+            <option value="Z">Z</option>
+
+            <option value="+">+</option>
+            <option value="-">-</option>
+            <option value="*">*</option>
+            <option value="/">/</option>
+            <option value="(">(</option>
+            <option value=")">)</option>
+            <option value="=">=</option>
+            <option value=",">,</option>
+            <option value=".">.</option>
+            <option value=" ">&nbsp;</option>
+        </select>
+    </div>
+    <div class="control-group">
+        <label for="sizeSlider">Display Zoom Level:</label>
+        <input type="range" id="sizeSlider" min="1" max="32" value="6" step="1">
+        <span id="sizeValue">6x</span>
+    </div>
+    <div class="control-group">
+        <label for="scaleFactorSlider">Pixels Per Vector Step:</label>
+        <input type="range" id="scaleFactorSlider" min="1" max="32" value="3" step="0.5">
+        <span id="scaleFactorValue">x1</span>
+    </div>
+    <div class="control-group">
+        <label for="lineWidthSlider">Line Width In Pixels:</label>
+        <input type="range" id="lineWidthSlider" min="1" max="32" value="3" step="0.5">
+        <span id="lineWidthValue">1px</span>
+    </div>
+    <div class="control-group">
+        <label for="borderWidthSlider">Border In Vector Steps:</label>
+        <input type="range" id="borderWidthSlider" min="0" max="8" value="0" step="1">
+        <span id="borderWidthValue">1px</span>
+    </div>
+    <div class="control-group">
+        <label for="lineCapSelect">Line Cap:</label>
+        <select id="lineCapSelect">
+            <option value="round">Round</option>
+            <option value="butt">Butt</option>
+            <option value="square">Square</option>
+        </select>
+    </div>
+    <div class="control-group">
+        <label for="lineJoinSelect">Line Join:</label>
+        <select id="lineJoinSelect">
+            <option value="round">Round</option>
+            <option value="bevel">Bevel</option>
+            <option value="miter">Miter</option>
+        </select>
+    </div>
+    <div class="control-group">
+        <label for="drawPixelReferenceCheckerboardToggle">Pixel Checkerboard:</label>
+        <input type="checkbox" id="drawPixelReferenceCheckerboardToggle" checked>
+    </div>
+    <div class="control-group">
+        <label for="lineAlphaSelect">Line Alpha:</label>
+        <select id="lineAlphaSelect">
+            <option value="1">100%</option>
+            <option value="0.75">75%</option>
+            <option value="0.5">50%</option>
+            <option value="0.25">25%</option>
+        </select>
+    </div>
+    <button id="redrawButton">Redraw</button>
+</div>
+<div id="display">
+    <h2>CDC Vector Character Generator V1.12</h2>
+    <div id="canvasContainer">
+        <canvas id="bitmapCanvas"></canvas>
+    </div>
+
+    <div id="debug">
+        <h3>Debug</h3>
+        <div id="debugOutput"></div>
+    </div>
+
+    <div id="checkTableContainer">
+        <h3>Check table (does not include reversals)</h3>
+        <div id="checkTableContainerContent"></div>
+    </div>
+</div>
+
+<script type="module" src="scripts/script.js"></script>
+</body>
+</html>
