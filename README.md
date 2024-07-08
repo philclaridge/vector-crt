@@ -25,6 +25,8 @@ As work in progress pull request for major changes not yet accepted.
 
 ## Getting Started
 
+[View web page hosted in this repo](https://philclaridge.github.io/vector-crt/)
+
 ### Dependencies
 
 * Install typescript compiler version 5.
@@ -48,8 +50,7 @@ Except, however, see licence details in Vector Rom file(s).
 
 ## Acknowledgments
 
-* [CDC 6600 Diagrams and Circuit Description](http://www.bitsavers.org/pdf/cdc/cyber/cyber_70/fieldEngr/60125000C_6602_6603_6622_6681_6682_Data_Channel_Diagrams_Dec65.pdf) See pages 26 to 30 for 
-* character forms
+* [CDC 6600 Diagrams and Circuit Description](http://www.bitsavers.org/pdf/cdc/cyber/cyber_70/fieldEngr/60125000C_6602_6603_6622_6681_6682_Data_Channel_Diagrams_Dec65.pdf) See pages 26 to 30 for character forms
 * [Design of a Computer: The Control Data 6600](http://ygdes.com/CDC/DesignOfAComputer_CDC6600.pdf)
 * [Video of CDC console](https://www.youtube.com/watch?v=wcSmUEaCRp8)
 * [Retro1.org](https://codex.retro1.org/cdc:start) Everything CDC
