@@ -9,12 +9,14 @@ SPDX-License-Identifier: MIT
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Vector character generator tester</title>
-    <link rel="stylesheet" href="styles/simple.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300italic,700,700italic">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/milligram/1.4.1/milligram.css">
     <link rel="stylesheet" href="styles/styles.css">
 </head>
 <body>
 <div id="controls">
-    <h2>Controls</h2>
+<!--    <h2>Controls</h2>-->
     <div class="control-group">
         <label for="characterSelect">Select Character:</label>
         <select id="characterSelect">
@@ -131,7 +133,10 @@ SPDX-License-Identifier: MIT
     <button id="redrawButton">Redraw</button>
 </div>
 <div id="display">
-    <h2>CDC Vector Character Generator V1.12</h2>
+    <header>
+        <h2>CDC Vector Character Generator V1.14</h2>
+    </header>
+
     <div id="canvasContainer">
         <canvas id="bitmapCanvas"></canvas>
     </div>
