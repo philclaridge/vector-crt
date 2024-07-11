@@ -21,6 +21,7 @@ const drawPixelReferenceCheckerboardToggle = document.getElementById('drawPixelR
 const lineAlphaSelect = document.getElementById('lineAlphaSelect') as HTMLSelectElement;
 const redrawButton = document.getElementById('redrawButton') as HTMLButtonElement;
 const checkTableContainerContent = document.getElementById('checkTableContainerContent') as HTMLDivElement;
+const debugOutputContent = document.getElementById('debugOutputContent') as HTMLDivElement;
 
 let pixelsPerVectorStep: number;
 let strokeStyle: string;
@@ -69,7 +70,7 @@ function drawCheckerboard(): void {
 function drawCharacter(): void {
     const character = characterSelect.value;
 
-    let characterFromVectorCharacterRomCDC6602 = vectorCharacterRomCDC6602[character];
+    const characterFromVectorCharacterRomCDC6602 = vectorCharacterRomCDC6602[character];
 
     drawCharacterPathUsingCanvas(
         bitmapCanvasContext,
@@ -82,12 +83,12 @@ function drawCharacter(): void {
         characterFromVectorCharacterRomCDC6602,
         pixelsPerVectorStep);
 
-    let segmentsFromRom = convertRomToDrawnVectorSegments(characterFromVectorCharacterRomCDC6602);
-    let simplifiedLineSegments = simplifyLines(segmentsFromRom);
+    const segmentsFromRom = convertRomToDrawnVectorSegments(characterFromVectorCharacterRomCDC6602);
+    const simplifiedLineSegments = simplifyLines(segmentsFromRom);
 
-
-
-
+    debugOutputContent.innerHTML = `<p>Character: ${character}</p>`;
+    debugOutputContent.innerHTML += `<p>Vector Drawn Segments From Rom: ${JSON.stringify(segmentsFromRom)}</p>`;
+    debugOutputContent.innerHTML += `<p>Vector Drawn Simplified Segments: ${JSON.stringify(simplifiedLineSegments)}</p>`;
 
     checkTableContainerContent.innerHTML = generateCdcCheckTable(characterFromVectorCharacterRomCDC6602);
 
