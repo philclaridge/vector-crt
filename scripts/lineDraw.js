@@ -50,6 +50,30 @@ function isCollinear(p1, p2, p3) {
     const [x3, y3] = p3;
     return Math.abs((y2 - y1) * (x3 - x2) - (y3 - y2) * (x2 - x1)) < 1e-10;
 }
+export function repeatCRTData(inputData, repetitions = 10) {
+    return inputData.flatMap(point => {
+        const [x, y, beam] = point;
+        const repeatedPoint = [x, y, beam ? 1 : 0]; // Convert boolean to 1 or 0
+        return Array(repetitions).fill(repeatedPoint);
+    });
+}
+export function applyFilters(inputData, xFilter, yFilter, beamFilter) {
+    return inputData.map((point, index) => {
+        const [x, y, beam] = point;
+        let filteredX, filteredY, filteredBeam;
+        if (index === 0) {
+            filteredX = xFilter.applyFirst(x);
+            filteredY = yFilter.applyFirst(y);
+            filteredBeam = beamFilter.applyFirst(beam);
+        }
+        else {
+            filteredX = xFilter.apply(x);
+            filteredY = yFilter.apply(y);
+            filteredBeam = beamFilter.apply(beam);
+        }
+        return [filteredX, filteredY, filteredBeam];
+    });
+}
 function isPathClosed(path) {
     if (path.length < 3)
         return false;

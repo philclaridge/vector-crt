@@ -2,13 +2,16 @@
 // SPDX-License-Identifier: MIT
 
 // TypeScript code
+import {DigitalFilter} from "./filters.js";
+import {PointOnOff} from "./vectorRomCDC6602.js";
+
 type Point = [number, number];
-type VectorTriplet = [number, number, boolean];
+type FilteredPoint = [number, number, number];
 
 // type VectorData = Record<string, VectorTriplet[]>;
 
 
-export function convertRomToDrawnVectorSegments(characterData: VectorTriplet[]): Point[][] {
+export function convertRomToDrawnVectorSegments(characterData: PointOnOff[]): Point[][] {
     const lines: Point[][] = [];
     let currentLine: Point[] = [];
     let isDrawing = false;
@@ -66,6 +69,41 @@ function isCollinear(p1: Point, p2: Point, p3: Point): boolean {
 
     return Math.abs((y2 - y1) * (x3 - x2) - (y3 - y2) * (x2 - x1)) < 1e-10;
 }
+
+export function repeatCRTData(inputData: PointOnOff[], repetitions: number = 10): FilteredPoint[] {
+    return inputData.flatMap(point => {
+        const [x, y, beam] = point;
+        const repeatedPoint: FilteredPoint = [x, y, beam ? 1 : 0]; // Convert boolean to 1 or 0
+        return Array(repetitions).fill(repeatedPoint);
+    });
+}
+
+export function applyFilters(
+    inputData: FilteredPoint[],
+    xFilter: DigitalFilter,
+    yFilter: DigitalFilter,
+    beamFilter: DigitalFilter
+): FilteredPoint[] {
+    return inputData.map((point, index) => {
+        const [x, y, beam] = point;
+
+        let filteredX, filteredY, filteredBeam;
+
+        if (index === 0) {
+            filteredX = xFilter.applyFirst(x);
+            filteredY = yFilter.applyFirst(y);
+            filteredBeam = beamFilter.applyFirst(beam);
+        } else {
+            filteredX = xFilter.apply(x);
+            filteredY = yFilter.apply(y);
+            filteredBeam = beamFilter.apply(beam);
+        }
+
+        return [filteredX, filteredY, filteredBeam];
+    });
+}
+
+
 
 function isPathClosed(path: Point[]): boolean {
     if (path.length < 3) return false;

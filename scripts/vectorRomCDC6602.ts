@@ -17,9 +17,10 @@
 // amplifier as the beam is turned on and off.
 
 
+export type PointOnOff = [number, number, boolean]
 
 export interface VectorData {
-    [key: string]: [number, number, boolean][];
+    [key: string]: PointOnOff[];
 }
 
 export const vectorCharacterRomCDC6602: VectorData = {
