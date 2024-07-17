@@ -16,7 +16,14 @@ SPDX-License-Identifier: MIT
 </head>
 <body>
 <div id="controls">
-<!--    <h2>Controls</h2>-->
+    <div class="control-group">
+        <label for="lineTypeSelect">Line Type:</label>
+        <select id="lineTypeSelect">
+            <option value="lineSegments">All Segment, No Filter</option>
+            <option value="simplifiedLineSegments">Simplifed, No Filter</option>
+            <option value="filteredBeamPath">FilteredBeamPath</option>
+        </select>
+    </div>
     <div class="control-group">
         <label for="characterSelect">Select Character:</label>
         <select id="characterSelect">

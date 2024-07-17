@@ -81,30 +81,26 @@ function isPathClosed(path) {
     const [endX, endY] = path[path.length - 1];
     return Math.abs(startX - endX) < 0.01 && Math.abs(startY - endY) < 0.01;
 }
-function pointVectorStepsToPixelLocation(stepLocations, pixelsPerVectorStep) {
+function convertVectorToPixelLocation(vectorLocation, pixelsPerVectorStep) {
     // Center drawing on correct sub pixels
-    const xPixelOffset = pixelsPerVectorStep / 2;
-    const yPixelOffset = pixelsPerVectorStep / 2;
-    return stepLocations.map((location) => {
-        const [x, y] = location;
-        return [(x * pixelsPerVectorStep) + xPixelOffset, 0 - (y * pixelsPerVectorStep) - yPixelOffset];
-    });
+    const [x, y] = vectorLocation;
+    return [
+        (x * pixelsPerVectorStep) + (pixelsPerVectorStep / 2),
+        (y * pixelsPerVectorStep) + (pixelsPerVectorStep / 2)
+    ];
 }
-export function drawVectorUsingCanvas(context2D, xStartPixel, yStartPixel, strokeStyle, lineWidthPixel, lineCap, lineJoin, line, pixelsPerVectorStep) {
+function drawVectorUsingCanvas(context2D, xStartPixel, yStartPixel, strokeStyle, lineWidthPixel, lineCap, lineJoin, line, pixelsPerVectorStep) {
     const isClosedPath = isPathClosed(line);
     context2D.beginPath();
     context2D.strokeStyle = strokeStyle;
     context2D.lineWidth = lineWidthPixel;
     context2D.lineCap = lineCap;
     context2D.lineJoin = lineJoin;
-    // Center drawing on correct sub pixels
-    const xPixelOffset = pixelsPerVectorStep / 2;
-    const yPixelOffset = pixelsPerVectorStep / 2;
     // Assumes origin at top left of bitmap
     for (let i = 0; i < line.length; i++) {
-        const [x, y] = line[i];
-        const scaledX = xStartPixel + (x * pixelsPerVectorStep) + xPixelOffset;
-        const scaledY = yStartPixel - (y * pixelsPerVectorStep) - yPixelOffset;
+        const [x, y] = convertVectorToPixelLocation(line[i], pixelsPerVectorStep);
+        const scaledX = xStartPixel + x;
+        const scaledY = yStartPixel - y;
         if (i === 0) {
             context2D.moveTo(scaledX, scaledY);
         }
@@ -117,58 +113,9 @@ export function drawVectorUsingCanvas(context2D, xStartPixel, yStartPixel, strok
     }
     context2D.stroke();
 }
-/*function plotCharacter(ctx: CanvasRenderingContext2D, character: string, vectorData: VectorData, x: number, y: number, scale: number = 1) {
-    const processedData = processVectorData(vectorData[character]);
-    const simplifiedData = simplifyLines(processedData);
-
-    ctx.save();
-    ctx.translate(x, y);
-    ctx.scale(scale, scale);
-
-    for (const line of simplifiedData) {
-        const isClosedPath = isPathClosed(line);
-
-        ctx.beginPath();
-        ctx.moveTo(line[0][0], line[0][1]);
-
-        for (let i = 1; i < line.length; i++) {
-            ctx.lineTo(line[i][0], line[i][1]);
-        }
-
-        if (isClosedPath) {
-            ctx.closePath();
-            ctx.stroke();
-        } else {
-            ctx.stroke();
-        }
+export function drawVectorsUsingCanvas(context2D, xStartPixel, yStartPixel, strokeStyle, lineWidthPixel, lineCap, lineJoin, lines, pixelsPerVectorStep) {
+    for (const line of lines) {
+        drawVectorUsingCanvas(context2D, xStartPixel, yStartPixel, strokeStyle, lineWidthPixel, lineCap, lineJoin, line, pixelsPerVectorStep);
     }
-
-    ctx.restore();
-
-    // Print intermediate results
-    printResults(character, processedData, simplifiedData);
-}*/
-export function drawCharacterPathUsingCanvas(context2D, xStartPixel, yStartPixel, strokeStyle, lineWidthPixel, lineCap, lineJoin, charData, pixelsPerVectorStep) {
-    context2D.beginPath();
-    context2D.strokeStyle = strokeStyle;
-    context2D.lineWidth = lineWidthPixel;
-    context2D.lineCap = lineCap;
-    context2D.lineJoin = lineJoin;
-    // Center drawing on correct sub pixels
-    const xPixelOffset = pixelsPerVectorStep / 2;
-    const yPixelOffset = pixelsPerVectorStep / 2;
-    // Assumes origin at top left of bitmap
-    for (let i = 0; i < charData.length; i++) {
-        const [x, y, draw] = charData[i];
-        const scaledX = xStartPixel + (x * pixelsPerVectorStep) + xPixelOffset;
-        const scaledY = yStartPixel - (y * pixelsPerVectorStep) - yPixelOffset;
-        if (i === 0 || !draw) {
-            context2D.moveTo(scaledX, scaledY);
-        }
-        else {
-            context2D.lineTo(scaledX, scaledY);
-        }
-    }
-    context2D.stroke();
 }
 //# sourceMappingURL=lineDraw.js.map

@@ -4,8 +4,7 @@
 import {generateCdcCheckTable, vectorCharacterRomCDC6602} from './vectorRomCDC6602.js';
 import {
     applyFilters,
-    convertRomToDrawnVectorSegments,
-    drawCharacterPathUsingCanvas,
+    convertRomToDrawnVectorSegments, drawVectorsUsingCanvas,
     repeatCRTData,
     simplifyLines
 } from "./lineDraw.js";
@@ -79,18 +78,8 @@ function drawCharacter(): void {
 
     const characterFromVectorCharacterRomCDC6602 = vectorCharacterRomCDC6602[character];
 
-    drawCharacterPathUsingCanvas(
-        bitmapCanvasContext,
-        pixelsPerVectorStep * borderWidthVectorSteps,
-        (canvasSizeVectorDots * pixelsPerVectorStep) + (pixelsPerVectorStep * borderWidthVectorSteps),
-        strokeStyle,
-        lineWidthPixels,
-        lineCap,
-        lineJoin,
-        characterFromVectorCharacterRomCDC6602,
-        pixelsPerVectorStep);
-
     const segmentsFromRom = convertRomToDrawnVectorSegments(characterFromVectorCharacterRomCDC6602);
+
     const simplifiedLineSegments = simplifyLines(segmentsFromRom);
 
     const repeatedData = repeatCRTData(characterFromVectorCharacterRomCDC6602, 10);
@@ -100,6 +89,17 @@ function drawCharacter(): void {
         new IIRFilter(0.08),
         new IIRFilter(0.1)
     );
+
+    drawVectorsUsingCanvas(
+        bitmapCanvasContext,
+        pixelsPerVectorStep * borderWidthVectorSteps,
+        (canvasSizeVectorDots * pixelsPerVectorStep) + (pixelsPerVectorStep * borderWidthVectorSteps),
+        strokeStyle,
+        lineWidthPixels,
+        lineCap,
+        lineJoin,
+        segmentsFromRom,
+        pixelsPerVectorStep);
 
     debugOutputContent.innerHTML = `<p>Character: ${character}</p>`;
     debugOutputContent.innerHTML += `<p>Vector Drawn Segments From Rom: ${JSON.stringify(segmentsFromRom)}</p>`;
